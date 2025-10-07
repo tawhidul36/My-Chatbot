@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Chatbot</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            color: white;
+            padding: 20px;
+        }
+        
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 700px;
+            width: 100%;
+            margin-top: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            color: #1e3c72;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+        
+        .input-section {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+        }
+        
+        #question {
+            width: 100%;
+            max-width: 500px;
+            padding: 15px 20px;
+            border: 2px solid #dee2e6;
+            border-radius: 25px;
+            font-size: 16px;
+            background: white;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+            margin-bottom: 15px;
+        }
+        
+        #question:focus {
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+        
+        #question::placeholder {
+            color: #6c757d;
+        }
+        
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            background: #1e3c72;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            background: #2a5298;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 60, 114, 0.4);
+        }
+        
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .chat-area {
+            max-height: 500px;
+            overflow-y: auto;
+        }
+        
+        .chat-message {
+            margin: 20px 0;
+            padding: 20px;
+            border-radius: 12px;
+            animation: slideIn 0.5s ease;
+            border-left: 4px solid transparent;
+        }
+        
+        .question-message {
+            background: #e3f2fd;
+            border-left-color: #1976d2;
+            color: #0d47a1;
+        }
+        
+        .answer-message {
+            background: #f1f8e9;
+            border-left-color: #388e3c;
+            color: #1b5e20;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+        
+        .message-label {
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            opacity: 0.8;
+        }
+        
+        .question-label {
+            color: #1976d2;
+        }
+        
+        .answer-label {
+            color: #388e3c;
+        }
+        
+        .message-content {
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        .loading {
+            text-align: center;
+            color: #666;
+            font-style: italic;
+            padding: 20px;
+            display: none;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .clear-chat {
+            background: #dc3545;
+            margin-top: 20px;
+            font-size: 14px;
+            padding: 10px 25px;
+        }
+        
+        .clear-chat:hover {
+            background: #c82333;
+        }
+        
+        .chat-area::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .chat-area::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+        
+        .chat-area::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+        
+        .chat-area::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            .input-section {
+                padding: 20px;
+            }
+            
+            #question {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>AI Assistant</h1>
+        
+        <div class="input-section">
+            <input type="text" id="question" placeholder="Type your question here..." />
+            <br>
+            <button onclick="askQuestion()" id="askBtn">Ask Question</button>
+            <button class="clear-chat" onclick="clearChat()" id="clearBtn">Clear Chat</button>
+        </div>
+        
+        <div class="chat-area" id="chatArea">
+            <div class="loading" id="loading">🤔 Thinking...</div>
+        </div>
+    </div>
+
+    <script>
+        let questionInput = document.getElementById("question");
+        let chatArea = document.getElementById("chatArea");
+        let loading = document.getElementById("loading");
+        let askBtn = document.getElementById("askBtn");
+        
+        // Allow Enter key to submit
+        questionInput.addEventListener("keypress", function(e) {
+            if (e.key === "Enter") {
+                askQuestion();
+            }
+        });
+        
+        function askQuestion() {
+            let query = questionInput.value.trim();
+            
+            if (!query) {
+                questionInput.style.borderColor = "#dc3545";
+                questionInput.placeholder = "Please type your question first!";
+                setTimeout(() => {
+                    questionInput.style.borderColor = "#dee2e6";
+                    questionInput.placeholder = "Type your question here...";
+                }, 2000);
+                return;
+            }
+            
+            // Show the question in chat area
+            showQuestion(query);
+            
+            // Clear input and show loading
+            questionInput.value = "";
+            loading.classList.add("show");
+            askBtn.disabled = true;
+            askBtn.textContent = "Thinking...";
+            
+            // Simulate API call (replace with your actual endpoint)
+            fetch(`/ask/?query=${encodeURIComponent(query)}`)
+                .then(res => res.json())
+                .then(data => {
+                    // Hide loading
+                    loading.classList.remove("show");
+                    
+                    // Show answer
+                    showAnswer(data.answer);
+                    
+                    // Reset button
+                    askBtn.disabled = false;
+                    askBtn.textContent = "Ask Question";
+                    
+                    // Focus back on input
+                    questionInput.focus();
+                    
+                    // Scroll to bottom
+                    chatArea.scrollTop = chatArea.scrollHeight;
+                })
+                .catch(err => {
+                    loading.classList.remove("show");
+                    showAnswer("Sorry, something went wrong. Please try again.");
+                    askBtn.disabled = false;
+                    askBtn.textContent = "Ask Question";
+                    questionInput.focus();
+                    chatArea.scrollTop = chatArea.scrollHeight;
+                });
+        }
+        
+        function showQuestion(question) {
+            let questionDiv = document.createElement("div");
+            questionDiv.className = "chat-message question-message";
+            questionDiv.innerHTML = `
+                <div class="message-label question-label">Your Question</div>
+                <div class="message-content">${question}</div>
+            `;
+            chatArea.appendChild(questionDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+        
+        function showAnswer(answer) {
+            let answerDiv = document.createElement("div");
+            answerDiv.className = "chat-message answer-message";
+            answerDiv.innerHTML = `
+                <div class="message-label answer-label">AI Response</div>
+                <div class="message-content">${answer}</div>
+            `;
+            chatArea.appendChild(answerDiv);
+            chatArea.scrollTop = chatArea.scrollHeight;
+        }
+        
+        function clearChat() {
+            chatArea.innerHTML = '<div class="loading" id="loading">🤔 Thinking...</div>';
+            loading = document.getElementById("loading");
+            questionInput.focus();
+        }
+        
+        // Focus on input when page loads
+        window.onload = function() {
+            questionInput.focus();
+        };
+    </script>
+</body>
+</html>

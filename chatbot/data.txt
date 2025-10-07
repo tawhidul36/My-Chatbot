@@ -1,0 +1,24 @@
+question	answer
+Who is Tawhidul Islam Akram?	Tawhidul Islam Akram is a Software Developer from Dhaka, Bangladesh. He has a B.Sc. in Computer Science and Engineering from Mawlana Bhashani Science and Technology University with a CGPA of 3.62. He is passionate about problem-solving and has solved over 1200 problems across platforms like Codeforces, Leetcode, and CodeChef.
+What is the email address of Tawhidul Islam Akram?	His email address is csemb36@gmail.com.
+What is the contact number of Tawhidul Islam Akram?	The contact number is (+880) 785062765.
+Where is Tawhidul Islam Akram from?	He is from Dhaka, Bangladesh.
+What is the GitHub of Tawhidul Islam Akram?	You can find him on GitHub with the username: tawhid36.
+What is the LinkedIn or profile link of Tawhidul Islam Akram?	He uses the handle: tawhidulislamakram.
+Where is Tawhidul currently working?	Tawhidul is currently working as a Software Developer at Smart Fields Service since September 2024.
+What kind of projects has Tawhidul Islam Akram worked on?	He has worked on an NFC-based authentication system, a fingerprint-based AI-secure app for medical centers, and is currently working on a government project for Savar Pourashava.
+What technologies does Tawhidul work with?	He works with Python, Django, DRF, AI, Arduino, Docker, Gunicorn, and more.
+What programming languages does Tawhidul know?	He is proficient in Python, C++, and Java.
+What databases does Tawhidul use?	Tawhidul works with MySQL and PostgreSQL.
+What frameworks has Tawhidul used?	He is experienced in Django, Django REST Framework (DRF), and FastAPI.
+What frontend technologies does Tawhidul use?	He uses HTML, CSS, Bootstrap, and JavaScript.
+What DevOps tools does Tawhidul know?	He has experience using GitHub, GitLab, and Docker.
+What tools does Tawhidul frequently use?	Tawhidul works with Visual Studio Code, Jupyter Notebook, Eclipse, Arduino, and Postman.
+What problem-solving platforms is Tawhidul active on?	He has solved over 1200+ problems across Codeforces (545+), Leetcode (175+), and CodeChef (275+, Max Rating: 1622).
+Tell me about Tawhidul’s arrhythmia detection project.	Tawhidul developed a machine learning model for early detection of shockable and non-shockable arrhythmia, achieving 99.54% accuracy using hybrid pooling. The model is designed to integrate with AEDs.
+What is the University Management System project by Tawhidul?	It’s a Django-based project with roles like Admin, Staff, and Student. Features include course management, attendance tracking, feedback system, notifications, and results management.
+What is Tawhidul’s e-commerce site project about?	It’s an online shopping site developed using Django and PostgreSQL. User features include product browsing, cart and checkout. The admin panel supports order, product management, and analytics.
+What degree does Tawhidul Islam Akram hold?	He holds a B.Sc. in Computer Science and Engineering from MBSTU (CGPA: 3.62).
+Where did Tawhidul complete his HSC and SSC?	He completed HSC in 2017 from Uttara Model College and SSC in 2015 from Wadudur Rahman High School, both with GPA 5.00.
+What co-curricular activities has Tawhidul participated in?	He volunteered and took a leadership role in the MBSTU Programming Community.
+What is Tawhidul’s favorite sport?	He is passionate about playing badminton.
