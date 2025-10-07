@@ -13,18 +13,19 @@ TEXT_FILE = "chatbot/data.txt"
 
 client = Groq(api_key=GROQ_API_KEY)
 tokenizer = tiktoken.get_encoding("cl100k_base")
-embedder = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Lazy load data
 _data_loaded = False
+_embedder = None
 _chunks = None
 _index = None
 _chunk_lookup = None
 
 def _load_data():
-    global _data_loaded, _chunks, _index, _chunk_lookup
+    global _data_loaded, _embedder, _chunks, _index, _chunk_lookup
     if _data_loaded:
         return
+    _embedder = SentenceTransformer("all-MiniLM-L6-v2")
     with open(TEXT_FILE, "r", encoding="utf-8") as f:
         website_text = f.read()
     
@@ -37,7 +38,7 @@ def _load_data():
         return chunks
     
     _chunks = chunk_text(website_text)
-    embeddings = embedder.encode(_chunks).tolist()
+    embeddings = _embedder.encode(_chunks).tolist()
     
     dimension = len(embeddings[0])
     _index = faiss.IndexFlatL2(dimension)
@@ -47,7 +48,7 @@ def _load_data():
 
 def ask_bot(query, top_k=3):
     _load_data()
-    query_embedding = embedder.encode([query])[0]
+    query_embedding = _embedder.encode([query])[0]
     D, I = _index.search(np.array([query_embedding]).astype("float32"), top_k)
     valid_indices = [i for i in I[0] if i != -1]
     if not valid_indices:
