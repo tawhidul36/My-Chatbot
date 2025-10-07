@@ -1,4 +1,5 @@
 import os
+import logging
 from django.shortcuts import render
 from django.http import JsonResponse
 import numpy as np
@@ -7,9 +8,13 @@ import tiktoken
 from groq import Groq
 from sentence_transformers import SentenceTransformer
 
+logger = logging.getLogger(__name__)
+
 GROQ_API_KEY = os.environ.get('GROQ_API_KEY', 'fallback-key')
 MODEL_NAME = "llama-3.1-8b-instant"
 TEXT_FILE = "chatbot/data.txt"
+
+logger.info(f"GROQ_API_KEY loaded: {'Yes' if GROQ_API_KEY != 'fallback-key' else 'No'}")
 
 client = Groq(api_key=GROQ_API_KEY)
 tokenizer = tiktoken.get_encoding("cl100k_base")
