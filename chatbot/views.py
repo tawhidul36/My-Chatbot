@@ -66,20 +66,6 @@ def ask_bot(query, top_k=3):
     )
     return response.choices[0].message.content.strip()
 
-def ask_bot(query, top_k=3):
-    query_embedding = embedder.encode([query])[0]
-    D, I = index.search(np.array([query_embedding]).astype("float32"), top_k)
-    valid_indices = [i for i in I[0] if i != -1]
-    if not valid_indices:
-        return "Sorry, I couldn't find relevant information."
-    relevant_chunks = "\n\n".join(chunk_lookup[i] for i in valid_indices)
-    prompt = f"""You are a helpful assistant. Answer the question using the context below.\n\nContext:\n{relevant_chunks}\n\nQuestion: {query}\nAnswer:"""
-    response = client.chat.completions.create(
-        model=MODEL_NAME,
-        messages=[{"role": "user", "content": prompt}]
-    )
-    return response.choices[0].message.content.strip()
-
 def chatbot_view(request):
     return render(request, "chatbot/chatbot.html")
 
